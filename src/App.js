@@ -1,25 +1,41 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+class List extends React.Component {
+    state = {
+        paises: [],
+        fronteiras: []
+    };
+    
+
+    componentDidMount() {
+        fetch('http://amock.io/api/fcmaia/countries')
+            .then(res => res.json())
+            .then(res => {
+                this.setState({
+                    paises: res
+                });
+            });
+    }
+    
+    render() {
+        this.state.paises.sort((a, b) => (a.fronteiras.length < b.fronteiras.length) ? 1 : -1)
+        return (
+            <div>
+                <h1>Lista de Países em ordem de fronteiras</h1>
+
+                <ul>
+                    {this.state.paises.map(item => (
+                        <li key={item.id}>
+                            <p><b>Código:</b> {item.code}</p>
+                            <p><b>Nome:</b> {item.name}</p>
+                            {/* <p><b>Fronteiras:</b> {item.fronteiras}</p> */}
+                        </li>
+                    ))}
+                </ul>
+            </div>
+        );
+    }
 }
 
-export default App;
+export default List;
