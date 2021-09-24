@@ -1,5 +1,5 @@
 import React from 'react';
-
+import "./App.css";
 
 class List extends React.Component {
     state = {
@@ -21,7 +21,7 @@ class List extends React.Component {
     render() {
         this.state.paises.sort((a, b) => (a.fronteiras.length < b.fronteiras.length) ? 1 : -1)
         return (
-            <div>
+            <div className="flex">
                 <h1>Lista de Países em ordem de fronteiras</h1>
 
                 <ul>
